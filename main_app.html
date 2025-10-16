@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html class="dark" lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Quantum Finance Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = { darkMode: "class", theme: { extend: { colors: { primary: "#2563eb", "bkg-light": "#f1f5f9", "bkg-dark": "#020617", "card-dark": "#0f172a" } } } };
+    </script>
+    <style>
+        #sentiment-needle { transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+    </style>
+</head>
+<body class="bg-bkg-light dark:bg-bkg-dark font-sans text-gray-800 dark:text-gray-200">
+
+    <div class="flex flex-col min-h-screen">
+        <header class="bg-white/80 dark:bg-card-dark/80 backdrop-blur-sm sticky top-0 z-20 border-b border-slate-200 dark:border-slate-800">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center gap-3 text-gray-900 dark:text-white">
+                        <span class="material-symbols-outlined text-primary text-2xl">insights</span>
+                        <h1 class="text-xl font-bold">Quantum Finance</h1>
+                    </div>
+                    <nav class="flex items-center gap-6" id="main-nav">
+                        <a href="#welcome-section" class="nav-link text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary">Welcome</a>
+                        <a href="#analysis-section" class="nav-link text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary">Analysis</a>
+                        <a href="#dashboard-section" class="nav-link text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary">Dashboard</a>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section id="welcome-section" class="min-h-screen flex items-center justify-center relative">
+                <div class="absolute inset-0 bg-cover bg-center" style='background-image: url("https://images.unsplash.com/photo-1620288235282-3d73504d603e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");'></div>
+                <div class="absolute inset-0 bg-black/50 dark:bg-black/70"></div>
+                <div class="relative w-full max-w-5xl px-4 text-center text-white">
+                    <h1 class="text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">Unlock Financial Insights with AI, ML, and Quantum Computing</h1>
+                    <p class="mt-4 text-lg text-white/80">Harness the power of cutting-edge technologies to analyze your financial data, predict market trends, and optimize your investment strategies.</p>
+                    <a href="#analysis-section" class="mt-8 inline-block cursor-pointer rounded-lg h-12 px-6 bg-primary text-white text-base font-bold leading-[3rem] shadow-lg">Proceed to Data Input</a>
+                </div>
+            </section>
+
+            <section id="analysis-section" class="min-h-screen flex items-center justify-center py-16">
+                 <div class="container mx-auto max-w-3xl px-4 w-full">
+                    <div class="bg-white dark:bg-card-dark p-6 sm:p-8 rounded-lg shadow-2xl border border-slate-200 dark:border-slate-800">
+                        <div class="space-y-6">
+                            <div class="space-y-4">
+                                <label class="block text-2xl font-bold text-gray-900 dark:text-white" for="ticker-input">Run Hybrid Quantum Analysis</label>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Enter a stock ticker (e.g., GOOGL, MSFT, AAPL) to run the model.</p>
+                                <div class="mt-4 flex flex-col sm:flex-row gap-4">
+                                    <input id="ticker-input" class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-bkg-dark px-4 py-2 shadow-sm" placeholder="e.g., GOOGL" type="text"/>
+                                    <button id="analyze-button" class="w-full sm:w-auto flex items-center justify-center rounded-md px-6 py-2 bg-primary text-white text-base font-bold">Analyze</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="dashboard-section" class="py-16 hidden">
+                 <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div id="dashboard-loader" class="text-center py-16 hidden"><p class="text-lg">Analyzing with Quantum Models... Please wait, this can take a few minutes.</p></div>
+                    <div id="dashboard-content" class="hidden">
+                        <h2 class="text-2xl font-bold mb-4">AI Summary & Key Insights for <span id="ticker-name" class="text-primary"></span></h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                           
+                            <div class="bg-white dark:bg-card-dark p-6 rounded-lg shadow-md border border-slate-200 dark:border-slate-800"><h3 class="font-semibold text-gray-500 dark:text-gray-400">AI Market Sentiment</h3><div class="relative mt-4 flex justify-center items-end h-24"><svg width="200" height="100" viewBox="0 0 200 100" class="absolute bottom-0"><path d="M 10 90 A 90 90 0 0 1 190 90" fill="none" stroke="#e2e8f0" stroke-width="20"/><path d="M 10 90 A 90 90 0 0 1 190 90" fill="none" stroke="url(#gradient)" stroke-width="20"/><defs><linearGradient id="gradient"><stop offset="0%" stop-color="#ef4444"/><stop offset="50%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#22c55e"/></linearGradient></defs></svg><div id="sentiment-needle" class="w-1 h-12 bg-gray-800 dark:bg-gray-200 rounded-t-full origin-bottom"></div></div><p id="sentiment-text" class="text-center text-2xl font-bold mt-2">-</p></div>
+                            
+                            <div class="bg-white dark:bg-card-dark p-6 rounded-lg shadow-md border border-slate-200 dark:border-slate-800"><h3 class="font-semibold text-gray-500 dark:text-gray-400">AI Prediction Confidence</h3><p id="confidence-score" class="text-5xl font-bold mt-2 text-primary">-</p><ul id="confidence-factors" class="text-xs mt-2 space-y-1 text-gray-500"></ul></div>
+                            <div class="bg-white dark:bg-card-dark p-6 rounded-lg shadow-md border border-slate-200 dark:border-slate-800"><h3 class="font-semibold text-gray-500 dark:text-gray-400">Risk Assessment</h3><p id="risk-level" class="text-2xl font-bold mt-2">-</p><p class="text-sm mt-2">Volatility: <span id="volatility-level" class="font-semibold"></span></p><p class="text-sm">Market Trend: <span id="market-trend" class="font-semibold"></span></p></div>
+                             
+                            <div class="bg-white dark:bg-card-dark p-6 rounded-lg shadow-md border border-slate-200 dark:border-slate-800">
+                                <h3 class="font-semibold text-gray-500 dark:text-gray-400 mb-4">Model Comparison</h3>
+                                <div class="grid grid-cols-3 gap-4 text-center divide-x divide-slate-200 dark:divide-slate-700">
+                                    <div><h4 class="font-semibold text-xs">Classical</h4><p class="text-green-500 text-xl font-bold" id="classical-mse">-</p><p class="text-xs text-gray-400">MSE</p></div>
+                                    <div><h4 class="font-semibold text-xs">Q. Classifier</h4><p class="text-primary text-xl font-bold" id="quantum-accuracy">-</p><p class="text-xs text-gray-400">Accuracy</p></div>
+                                    <div><h4 class="font-semibold text-xs">Q. Regressor</h4><p class="text-green-500 text-xl font-bold" id="quantum-mse">-</p><p class="text-xs text-gray-400">MSE</p></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="bg-white dark:bg-card-dark p-6 rounded-lg shadow-md border border-slate-200 dark:border-slate-800"><h3 class="font-semibold text-lg mb-4">Classical Prediction with Quantum Direction</h3><canvas id="pricePredictionChart"></canvas></div>
+                            <div class="bg-white dark:bg-card-dark p-6 rounded-lg shadow-md border border-slate-200 dark:border-slate-800"><h3 class="font-semibold text-lg mb-4">Quantum Predicted Daily Change ($)</h3><canvas id="quantumChangeChart"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const BACKEND_URL = "http://127.0.0.1:8000";
+        let priceChartInstance = null;
+        let quantumChartInstance = null;
+
+        async function fetchApi(endpoint) {
+            const response = await fetch(`${BACKEND_URL}${endpoint}`);
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        }
+
+        async function loadDashboardMetrics(ticker) {
+            const dashboardSection = document.getElementById('dashboard-section');
+            const contentEl = document.getElementById('dashboard-content');
+            const loaderEl = document.getElementById('dashboard-loader');
+            
+            dashboardSection.classList.remove('hidden');
+            contentEl.classList.add('hidden');
+            loaderEl.classList.remove('hidden');
+
+            try {
+                const data = await fetchApi(`/analysis/dashboard/${ticker}`);
+                
+                // --- Populate All Cards (including Sentiment) ---
+                document.getElementById('ticker-name').textContent = data.ticker;
+                
+                // AI Market Sentiment ADDED BACK
+                document.getElementById('sentiment-text').textContent = data.sentiment_score > 0.3 ? 'Bullish' : data.sentiment_score < -0.3 ? 'Bearish' : 'Neutral';
+                document.getElementById('sentiment-needle').style.transform = `rotate(${data.sentiment_score * 90}deg)`;
+
+                document.getElementById('confidence-score').textContent = `${data.confidence_score}%`;
+                const factors = data.confidence_factors;
+                document.getElementById('confidence-factors').innerHTML = `<li>Accuracy: <span class="font-semibold">${factors.historical_accuracy}</span></li><li>Sentiment: <span class="font-semibold">${factors.market_sentiment}</span></li><li>Volatility: <span class="font-semibold">${factors.stock_volatility}</span></li>`;
+                document.getElementById('risk-level').textContent = data.risk_level;
+                document.getElementById('volatility-level').textContent = data.volatility;
+                document.getElementById('market-trend').textContent = data.market_trend;
+                
+                document.getElementById('classical-mse').textContent = data.classical_mse.toFixed(4);
+                document.getElementById('quantum-accuracy').textContent = `${(data.quantum_class_accuracy * 100).toFixed(1)}%`;
+                document.getElementById('quantum-mse').textContent = data.quantum_regr_mse.toFixed(4);
+
+                if (priceChartInstance) priceChartInstance.destroy();
+                if (quantumChartInstance) quantumChartInstance.destroy();
+
+                const priceCtx = document.getElementById('pricePredictionChart').getContext('2d');
+                priceChartInstance = new Chart(priceCtx, { /* ... same chart logic ... */ });
+                
+                const quantumCtx = document.getElementById('quantumChangeChart').getContext('2d');
+                quantumChartInstance = new Chart(quantumCtx, { /* ... same chart logic ... */ });
+
+                contentEl.classList.remove('hidden');
+                document.getElementById('dashboard-section').scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+                dashboardSection.classList.add('hidden');
+            } finally {
+                loaderEl.classList.add('hidden');
+            }
+        }
+        
+        // --- Full script with all functions ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const analyzeButton = document.getElementById('analyze-button');
+            const tickerInput = document.getElementById('ticker-input');
+            
+            function handleAnalysis() {
+                const ticker = tickerInput.value.trim().toUpperCase();
+                if (ticker) {
+                    loadDashboardMetrics(ticker);
+                } else {
+                    alert('Please enter a stock ticker.');
+                }
+            }
+
+            if (analyzeButton) analyzeButton.addEventListener('click', handleAnalysis);
+            if (tickerInput) tickerInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') { e.preventDefault(); handleAnalysis(); }
+            });
+
+            // --- SCROLLING AND NAVIGATION LOGIC ADDED BACK ---
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelector(link.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            const proceedButton = document.querySelector('a[href="#analysis-section"]');
+            if(proceedButton) {
+                proceedButton.addEventListener('click', (e) => {
+                     e.preventDefault();
+                     document.querySelector(proceedButton.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+
+        // The full chart rendering logic is below to keep this block clean
+        async function fullLoadDashboardMetrics(ticker) {
+            const dashboardSection = document.getElementById('dashboard-section');
+            const contentEl = document.getElementById('dashboard-content');
+            const loaderEl = document.getElementById('dashboard-loader');
+            
+            dashboardSection.classList.remove('hidden');
+            contentEl.classList.add('hidden');
+            loaderEl.classList.remove('hidden');
+
+            try {
+                const data = await fetchApi(`/analysis/dashboard/${ticker}`);
+                
+                document.getElementById('ticker-name').textContent = data.ticker;
+                document.getElementById('sentiment-text').textContent = data.sentiment_score > 0.3 ? 'Bullish' : data.sentiment_score < -0.3 ? 'Bearish' : 'Neutral';
+                document.getElementById('sentiment-needle').style.transform = `rotate(${data.sentiment_score * 90}deg)`;
+                document.getElementById('confidence-score').textContent = `${data.confidence_score}%`;
+                const factors = data.confidence_factors;
+                document.getElementById('confidence-factors').innerHTML = `<li>Accuracy: <span class="font-semibold">${factors.historical_accuracy}</span></li><li>Sentiment: <span class="font-semibold">${factors.market_sentiment}</span></li><li>Volatility: <span class="font-semibold">${factors.stock_volatility}</span></li>`;
+                document.getElementById('risk-level').textContent = data.risk_level;
+                document.getElementById('volatility-level').textContent = data.volatility;
+                document.getElementById('market-trend').textContent = data.market_trend;
+                
+                document.getElementById('classical-mse').textContent = data.classical_mse.toFixed(4);
+                document.getElementById('quantum-accuracy').textContent = `${(data.quantum_class_accuracy * 100).toFixed(1)}%`;
+                document.getElementById('quantum-mse').textContent = data.quantum_regr_mse.toFixed(4);
+
+                if (priceChartInstance) priceChartInstance.destroy();
+                if (quantumChartInstance) quantumChartInstance.destroy();
+
+                const priceCtx = document.getElementById('pricePredictionChart').getContext('2d');
+                const quantum_points = data.quantum_predictions;
+                priceChartInstance = new Chart(priceCtx, {
+                    type: 'line', data: { labels: data.chart_labels, datasets: [ { label: 'Historical Price', data: data.historical_prices, borderColor: 'rgb(59, 130, 246)', tension: 0.1, pointRadius: 0 }, { label: 'Predicted (Classical)', data: data.predicted_prices, borderColor: 'rgba(234, 179, 8, 0.8)', borderDash: [5, 5], tension: 0.1, pointStyle: (ctx) => { const i = ctx.dataIndex, h = data.historical_prices.length; if (i < h || quantum_points[i - h] === undefined) return false; return 'triangle'; }, pointBackgroundColor: (ctx) => { const i = ctx.dataIndex, h = data.historical_prices.length; if (i < h || quantum_points[i - h] === undefined) return 'rgba(234, 179, 8, 0.8)'; return quantum_points[i - h] === 1 ? 'rgba(34, 197, 94, 1)' : 'rgba(239, 68, 68, 1)'; }, pointRadius: 5, pointRotation: (ctx) => { const i = ctx.dataIndex, h = data.historical_prices.length; if (i < h || quantum_points[i - h] === undefined) return 0; return quantum_points[i - h] === 1 ? 0 : 180; } } ] }, options: { scales: { y: { beginAtZero: false } }, interaction: { intersect: false, mode: 'index' } } });
+                
+                const quantumCtx = document.getElementById('quantumChangeChart').getContext('2d');
+                const quantumRegrData = data.quantum_regr_predictions;
+                quantumChartInstance = new Chart(quantumCtx, { type: 'bar', data: { labels: data.chart_labels.slice(-30), datasets: [{ label: 'Predicted Price Change ($)', data: quantumRegrData, backgroundColor: quantumRegrData.map(v => v >= 0 ? 'rgba(34, 197, 94, 0.6)' : 'rgba(239, 68, 68, 0.6)'), borderColor: quantumRegrData.map(v => v >= 0 ? 'rgb(34, 197, 94)' : 'rgb(239, 68, 68)'), borderWidth: 1 }] }, options: { plugins: { legend: { display: false } } } });
+
+                contentEl.classList.remove('hidden');
+                document.getElementById('dashboard-section').scrollIntoView({ behavior: 'smooth' });
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+                dashboardSection.classList.add('hidden');
+            } finally {
+                loaderEl.classList.add('hidden');
+            }
+        }
+        // Correctly assign the full function to the original name
+        loadDashboardMetrics = fullLoadDashboardMetrics;
+    </script>
+</body>
+</html>
