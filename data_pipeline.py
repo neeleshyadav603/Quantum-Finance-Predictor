@@ -27,7 +27,7 @@ def get_sentiment(ticker):
     NewsAPI ka use karke live financial news fetch karta hai aur uska sentiment nikalta hai.
     """
     # APNI NEWSAPI KEY YAHA PASTE KAREIN
-    api_key = "75f786cda3ae4e6792ae17e3e03969eb"
+    api_key = "*********************************"
     
     # Ticker se company ka naam search karna behtar rehta hai
     company_names = {"GOOGL": "Alphabet", "MSFT": "Microsoft", "AAPL": "Apple", "NVDA": "Nvidia"}
@@ -98,4 +98,5 @@ if __name__ == "__main__":
     if final_data is not None:
         print(final_data.head())
         print(final_data.tail())
+
         print(f"Shape of the final dataset: {final_data.shape}")
